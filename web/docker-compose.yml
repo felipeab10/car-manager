@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  mysql:
+  carmanager-mysql:
     image: mariadb:latest
     container_name: carmanager-mysql
     environment:
@@ -19,6 +19,8 @@ services:
     container_name: car-manager
     build:
       context: ./
+      depends_on:
+        - carmanager-mysql
       target: production
       dockerfile: Dockerfile
     volumes:
@@ -26,7 +28,7 @@ services:
         - /app/node_modules
         - /app/.next
     links:
-      - mysql    
+      - carmanager-mysql    
     #ports:
      # - "3000:3000"
   
