@@ -1,9 +1,4 @@
 version: '3.8'
-networks:
-  default:
-    external:
-      name: ngixproxymanager_default
-
 services:
   
   car-manager:
@@ -18,6 +13,8 @@ services:
         - .:/app
         - /app/node_modules
         - /app/.next
+    networks:
+      - ngixproxymanager_default
 
 
   
