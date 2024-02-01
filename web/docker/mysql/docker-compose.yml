@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+    carmanager-mysql:
+    image: mariadb:latest
+    container_name: carmanager-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: car-manager
+      MYSQL_USER: car
+      MYSQL_PASSWORD: 'root'
+    #ports:
+    #  - "3307:3306"
+    volumes:
+      - ./database/mysql:/var/lib/mysql
+    restart: unless-stopped
+
+networks:
+  network1:
+    name: ngixproxymanager_default
+    external: true
