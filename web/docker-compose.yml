@@ -12,6 +12,8 @@ services:
         - .:/app
         - /app/node_modules
         - /app/.next
+    links:
+      - mysql    
     #ports:
      # - "3000:3000"
   mysql:
