@@ -1,4 +1,8 @@
 version: '3.8'
+networks:
+  default:
+    external:
+      name: ngixproxymanager_default
 services:
     carmanager-mysql:
       image: mariadb:latest
@@ -14,7 +18,3 @@ services:
       - ./database/mysql:/var/lib/mysql
       restart: unless-stopped
 
-networks:
-  network1:
-    name: ngixproxymanager_default
-    external: true
