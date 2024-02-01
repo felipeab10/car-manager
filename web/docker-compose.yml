@@ -1,8 +1,8 @@
 version: '3.8'
 services:
   car-manager:
-    image: car-manager
-    #image: ghcr.io/felipeab10/car-manager:latest
+    #image: car-manager
+    image: ghcr.io/felipeab10/car-manager:1.0@sha256:da6cd61b2d767ecc915f917c808dcca39a523d7b6a5e7035fb88492277f6e123
     container_name: car-manager
     build:
       context: ./
@@ -14,3 +14,16 @@ services:
         - /app/.next
     #ports:
      # - "3000:3000"
+  mysql:
+    image: mariadb:latest
+    container_name: carmanager-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: car-manager
+      MYSQL_USER: car
+      MYSQL_PASSWORD: 'root'
+    #ports:
+    #  - "3307:3306"
+    volumes:
+      - ./database/mysql:/var/lib/mysql
+    restart: unless-stopped
