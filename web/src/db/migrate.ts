@@ -1,7 +1,14 @@
 import 'dotenv/config'
 import { migrate } from 'drizzle-orm/mysql2/migrator'
-import { connection, db } from './db'
-// This will run migrations on the database, skipping the ones already applied
-await migrate(db, { migrationsFolder: './drizzle' })
-// Don't forget to close the connection, otherwise the script will hang
-await connection.end()
+import { connection, db } from '.'
+
+async function main() {
+  console.log('[migrate] Running migrations ...')
+
+  await migrate(db, { migrationsFolder: './drizzle' })
+
+  console.log('[migrate] All migrations have been ran, exiting ...')
+  await connection.end()
+}
+
+main()
