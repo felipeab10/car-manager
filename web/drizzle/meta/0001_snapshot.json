@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "f8c2ef76-59ab-4fc1-bed7-e5f2535f5110",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "38f83ca5-aca9-4332-b968-82dafec255ab",
+  "prevId": "f8c2ef76-59ab-4fc1-bed7-e5f2535f5110",
   "tables": {
     "users": {
       "name": "users",
@@ -42,6 +42,13 @@
           "notNull": false,
           "autoincrement": false,
           "default": true
+        },
+        "cpf": {
+          "name": "cpf",
+          "type": "varchar(14)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {

@@ -2,7 +2,18 @@ import dotenv from 'dotenv'
 
 import { drizzle } from 'drizzle-orm/mysql2'
 import mysql from 'mysql2/promise'
+
+import * as schema from './schema'
 dotenv.config({ path: '.env.local' })
+
+if (
+  !process.env.DATABASE_HOST ||
+  !process.env.DATABASE_USERNAME ||
+  !process.env.DATABASE_NAME ||
+  !process.env.DATABASE_PASSWORD
+) {
+  throw new Error('Database credentials missing.')
+}
 
 export const connection = await mysql.createConnection({
   host: process.env.DATABASE_HOST,
@@ -11,4 +22,4 @@ export const connection = await mysql.createConnection({
   password: process.env.DATABASE_PASSWORD,
 })
 
-export const db = drizzle(connection)
+export const db = drizzle(connection, { schema, mode: 'planetscale' })

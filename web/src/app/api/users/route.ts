@@ -1,6 +1,5 @@
-import { db } from '@/db/db'
-
-import { users } from '@/db/schemas/usuario'
+import { db } from '@/db'
+import { users } from '@/db/schema'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
