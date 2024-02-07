@@ -105,11 +105,12 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 USER nextjs
 
+CMD ["node", "server.js"]
 # CMD npm start
-CMD ["npm","start"]
+# CMD ["npm","start"]
 
-FROM base as dev
-ENV NODE_ENV=development
-RUN npm install 
-COPY . .
-CMD npm run dev
+# FROM base as dev
+# ENV NODE_ENV=development
+# RUN npm install 
+# COPY . .
+# CMD npm run dev
