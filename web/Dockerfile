@@ -105,6 +105,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 USER nextjs
 
+RUN npm install tsx 
 RUN npm run migrate
 
 CMD ["node", "server.js"]
