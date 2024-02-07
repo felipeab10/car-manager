@@ -74,39 +74,45 @@
 
 # CMD ["npm","run","dev"]
 
-FROM node:18-alpine as base
+FROM node:18-alpine as builder
 RUN apk update && apk upgrade && apk add dumb-init  &&  apk add --no-cache g++ make py3-pip libc6-compat
-WORKDIR /app
-COPY package*.json ./
-EXPOSE 3000
-
-FROM base as builder
 WORKDIR /app
 COPY . .
 RUN npm install
+ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED 1
 RUN npm run build
-RUN npm run migrate
-
-
-
-FROM base as production
-WORKDIR /app
-ENV NODE_ENV=production
-RUN npm install
 RUN npm ci
+
+EXPOSE 3000
+
+# FROM base as builder
+# WORKDIR /app
+# COPY . .
+# RUN npm install
+# ENV NEXT_TELEMETRY_DISABLED 1
+# RUN npm run build
+# RUN npm run migrate
+
+
+
+# FROM base as production
+# WORKDIR /app
+# ENV NODE_ENV=production
+# RUN npm install
+# RUN npm ci
 
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=production /app/public ./public
+COPY --from=builder /app/public ./public
 
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
-COPY --from=production --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=production --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 USER nextjs
 
 
