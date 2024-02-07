@@ -8,7 +8,9 @@ services:
     image: car-manager-app
     networks:
         - "default"
-    container_name: car-manager    
+    container_name: car-manager
+    ports:
+      - "3003:3000"    
     
     
 networks:
