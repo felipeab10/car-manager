@@ -13,6 +13,7 @@ const insertUserSchema = z.object({
 
 export async function GET() {
   const { password, ...rest } = getTableColumns(users)
+  console.log(password)
 
   const teste = await db.select(rest).from(users)
   return NextResponse.json(teste)

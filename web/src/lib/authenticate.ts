@@ -10,4 +10,5 @@ export async function authenticate({ email, password }: authenticateProps) {
   const user = await db.query.users.findFirst({
     where: eq(users.email, email) && eq(users.password, password),
   })
+  console.log(user)
 }

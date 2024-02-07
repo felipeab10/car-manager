@@ -41,6 +41,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     jwt: async ({ token, user }) => {
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
       const customUser = user as unknown as any
 
       if (user) {
