@@ -1,9 +1,20 @@
+import * as schema from '@/db/schema'
 import dotenv from 'dotenv'
+
+// export const connection = connect({
+//   host: process.env.DATABASE_HOST,
+//   username: process.env.DATABASE_USERNAME,
+//   password: process.env.DATABASE_PASSWORD,
+// })
+
+// export const db = drizzle(connection)
 
 import { drizzle } from 'drizzle-orm/mysql2'
 import mysql from 'mysql2/promise'
 
-import * as schema from './schema'
+// import { connect } from '@planetscale/database'
+// import { drizzle } from 'drizzle-orm/planetscale-serverless'
+
 dotenv.config({ path: '.env.local' })
 
 if (
