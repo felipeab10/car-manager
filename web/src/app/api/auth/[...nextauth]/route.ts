@@ -1,12 +1,8 @@
-import { db } from '@/db'
-import { DrizzleAdapter } from '@/lib/drizzle-adapter'
-
 import { NextAuthOptions } from 'next-auth'
 import NextAuth from 'next-auth/next'
 import CredentialProvider from 'next-auth/providers/credentials'
 
-export const authOptions: NextAuthOptions = {
-  adapter: DrizzleAdapter(db),
+const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
