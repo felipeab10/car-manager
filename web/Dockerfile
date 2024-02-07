@@ -100,11 +100,14 @@ RUN npm ci
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
+
+COPY --from=production /app/public ./public
+
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=production --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=production --chown=nextjs:nodejs /app/.next/static ./.next/static
 USER nextjs
 
 
