@@ -3,7 +3,7 @@ import { createId } from '@paralleldrive/cuid2'
 import { and, eq } from 'drizzle-orm'
 
 import type { Adapter } from 'next-auth/adapters'
-
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export function DrizzleAdapter(db: any): Adapter {
   return {
     async createUser(userData) {
