@@ -84,6 +84,7 @@ FROM base as builder
 WORKDIR /app
 COPY . .
 RUN npm install
+ENV NEXT_TELEMETRY_DISABLED 1
 RUN npm run build
 
 
