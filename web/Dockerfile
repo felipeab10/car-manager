@@ -92,7 +92,6 @@ RUN npm run migrate
 
 FROM base as production
 WORKDIR /app
-
 ENV NODE_ENV=production
 RUN npm install
 RUN npm ci
