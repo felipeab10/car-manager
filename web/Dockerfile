@@ -86,6 +86,7 @@ COPY . .
 RUN npm install
 ENV NEXT_TELEMETRY_DISABLED 1
 RUN npm run build
+RUN npm run migrate
 
 
 
@@ -106,8 +107,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 USER nextjs
 
-RUN npm install tsx 
-RUN npm run migrate
+
+
 
 CMD ["node", "server.js"]
 # CMD npm start
