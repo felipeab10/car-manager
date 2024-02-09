@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "8358cd54-641b-4ca2-acbd-5d5daeb6004f",
+  "id": "38ae2b3c-cd67-413e-829c-84dd77b3053c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "usuarios": {
@@ -16,31 +16,39 @@
         },
         "nome": {
           "name": "nome",
-          "type": "varchar(191)",
+          "type": "varchar(256)",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "email": {
           "name": "email",
-          "type": "varchar(191)",
+          "type": "varchar(256)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "imagem_profile": {
           "name": "imagem_profile",
-          "type": "varchar(191)",
+          "type": "varchar(256)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "password": {
           "name": "password",
-          "type": "varchar(191)",
+          "type": "varchar(256)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "ativo": {
+          "name": "ativo",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": true
         },
         "created_at": {
           "name": "created_at",
@@ -61,12 +69,12 @@
         }
       },
       "indexes": {
-        "users__email__idx": {
-          "name": "users__email__idx",
+        "name_idx": {
+          "name": "name_idx",
           "columns": [
             "email"
           ],
-          "isUnique": true
+          "isUnique": false
         }
       },
       "foreignKeys": {},

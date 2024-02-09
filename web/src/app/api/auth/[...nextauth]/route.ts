@@ -50,7 +50,7 @@ const authOptions: NextAuthOptions = {
       return token
     },
     session: async ({ session, token }) => {
-      console.log(session)
+      // console.log(session)
       return {
         ...session,
         user: {
