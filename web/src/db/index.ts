@@ -26,11 +26,12 @@ if (
   throw new Error('Database credentials missing.')
 }
 
-export const connection = await mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USERNAME,
-  database: process.env.DATABASE_NAME,
-  password: process.env.DATABASE_PASSWORD,
-})
+export const connection = mysql.createPool(process.env.DATABASE_URL as string)
+// export const connection = await mysql.createConnection({
+//   host: process.env.DATABASE_HOST,
+//   user: process.env.DATABASE_USERNAME,
+//   database: process.env.DATABASE_NAME,
+//   password: process.env.DATABASE_PASSWORD,
+// })
 
 export const db = drizzle(connection, { schema, mode: 'planetscale' })
