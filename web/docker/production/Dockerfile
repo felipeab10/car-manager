@@ -24,8 +24,9 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # This will do the trick, use the corresponding env file for each environment.
 COPY production.env.local .env.production
-RUN npm run build
 RUN npm run migrate
+
+RUN npm run build
 
 # 3. Production image, copy all the files and run next
 FROM base AS runner
