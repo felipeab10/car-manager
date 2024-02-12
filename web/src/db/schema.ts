@@ -23,3 +23,28 @@ export const users = mysqlTable(
     nameIdx: index('name_idx').on(users.email),
   }),
 )
+
+export const marcas = mysqlTable(
+  'marcas',
+  {
+    id: bigint('id', { mode: 'number' }).primaryKey().autoincrement(),
+    nome: varchar('nome', { length: 256 }).notNull(),
+  },
+  (marcas) => ({
+    nomeIdx: index('nome_idx').on(marcas.nome),
+  }),
+)
+
+export const modelos = mysqlTable(
+  'modelos',
+  {
+    id: bigint('id', { mode: 'number' }).primaryKey().autoincrement(),
+    nome: varchar('nome', { length: 256 }).notNull(),
+    marca_id: bigint('marca_id', { mode: 'number' })
+      .notNull()
+      .references(() => marcas.id),
+  },
+  (marcas) => ({
+    nomeIdx: index('nome_idx').on(marcas.nome),
+  }),
+)
