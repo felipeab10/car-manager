@@ -1,45 +1,19 @@
-import { db } from '@/db'
-import { users } from '@/db/schema'
-import bcrypt from 'bcrypt'
-import { eq } from 'drizzle-orm'
+import {
+  BuscarUsuarioPeloEmail,
+  CriarUsuario,
+  TodosUsuarios,
+  update,
+} from '@/app/domains/services/usuarioService'
 import { NextRequest, NextResponse } from 'next/server'
-import * as z from 'zod'
-
-const insertUserSchema = z.object({
-  nome: z.string(),
-  email: z.string(),
-  password: z.string(),
-})
 
 export async function GET() {
-  const teste = await db
-    .select({
-      nome: users.nome,
-      email: users.email,
-      ativo: users.ativo,
-      imagem_profile: users.imagem_profile,
-      created_at: users.created_at,
-      updated_at: users.updated_at,
-    })
-    .from(users)
-  return NextResponse.json(teste)
+  return NextResponse.json({ usuarios: await TodosUsuarios() }, { status: 200 })
 }
 
 export async function POST(request: NextRequest) {
   const params = await request.json()
 
-  const formValidate = insertUserSchema.safeParse(params)
-  if (!formValidate.success) {
-    const errors = formValidate.error.formErrors
-    return NextResponse.json(
-      { error: { message: 'Invalid request', errors } },
-      { status: 400 },
-    )
-  }
-
-  const userExist = await db.query.users.findFirst({
-    where: eq(users.email, params.email),
-  })
+  const userExist = await BuscarUsuarioPeloEmail(params.email)
 
   if (userExist) {
     return NextResponse.json(
@@ -49,16 +23,45 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const hashedPassword = await bcrypt.hash(params.password, 10)
+    const validate = await CriarUsuario(params)
 
-    await db.insert(users).values({ ...params, password: hashedPassword })
+    if (validate && !validate?.isValid) {
+      return NextResponse.json(
+        { error: { message: 'Invalid request', errors: validate?.errors } },
+        { status: 400 },
+      )
+    }
 
-    return NextResponse.json({ status: 'Success' }, { status: 201 })
-  } catch (error) {}
+    return NextResponse.json(
+      { status: 'Success', ...validate },
+      { status: 201 },
+    )
+  } catch (error) {
+    return NextResponse.json({ status: 'Error', error }, { status: 422 })
+  }
 }
 
-export async function PUT() {
-  return NextResponse.json({})
+export async function PUT(request: NextRequest) {
+  const params = await request.json()
+
+  try {
+    const validate = await update(params)
+
+    if (validate && !validate.isValid) {
+      const { errors } = validate as {
+        errors: { message: string; status: number }
+      }
+
+      return NextResponse.json({ errors }, { status: errors.status })
+    }
+
+    return NextResponse.json(
+      { status: 'Success', ...validate },
+      { status: 200 },
+    )
+  } catch (error) {
+    return NextResponse.json({ status: 'Error', error }, { status: 422 })
+  }
 }
 
 export async function DELETE() {
