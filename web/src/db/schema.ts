@@ -1,3 +1,4 @@
+import { relations } from 'drizzle-orm'
 import {
   bigint,
   boolean,
@@ -35,6 +36,10 @@ export const marcas = mysqlTable(
   }),
 )
 
+export const marcasRelations = relations(marcas, ({ many }) => ({
+  modelos: many(modelos),
+}))
+
 export const modelos = mysqlTable(
   'modelos',
   {
@@ -48,3 +53,10 @@ export const modelos = mysqlTable(
     nomeIdx: index('nome_idx').on(marcas.nome),
   }),
 )
+
+export const modelosRelations = relations(modelos, ({ one }) => ({
+  marca: one(marcas, {
+    fields: [modelos.marca_id],
+    references: [marcas.id],
+  }),
+}))
