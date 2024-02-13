@@ -6,6 +6,28 @@ import {
 import { NextRequest, NextResponse } from 'next/server'
 import z from 'zod'
 
+export async function GET(
+  request: NextRequest,
+  context: { params: { id: string } },
+) {
+  const id = context.params.id
+
+  const modeloExist = await ProcurarModeloPeloId(id)
+
+  if (!modeloExist) {
+    return NextResponse.json(
+      { message: 'Modelo não encontrado!' },
+      { status: 404 },
+    )
+  }
+
+  try {
+    return NextResponse.json(modeloExist)
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 422 })
+  }
+}
+
 export async function PUT(
   request: NextRequest,
   context: { params: { id: string } },
