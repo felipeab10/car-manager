@@ -21,6 +21,15 @@ export async function BuscarPeloEmail(email: string) {
   })
 }
 
+export async function BuscarPeloId(id: string) {
+  return await db.query.users.findFirst({
+    where: eq(users.id, Number(id)),
+    columns: {
+      password: false,
+    },
+  })
+}
+
 export async function StoreUsuario(attributes: UsuarioType) {
   const hashedPassword = await bcrypt.hash(attributes.password, 10)
 
@@ -28,7 +37,7 @@ export async function StoreUsuario(attributes: UsuarioType) {
 }
 
 interface UpdateUserProps {
-  id: number
+  id: string
   attributes: UsuarioType
 }
 
@@ -42,5 +51,9 @@ export async function Update({ id, attributes }: UpdateUserProps) {
   return await db
     .update(users)
     .set({ ...attributes, password: hashedPassword })
-    .where(eq(users.id, id))
+    .where(eq(users.id, Number(id)))
+}
+
+export async function Delete(id: string) {
+  await db.delete(users).where(eq(users.id, Number(id)))
 }

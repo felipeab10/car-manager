@@ -1,6 +1,7 @@
-import * as z from 'zod'
 import {
   BuscarPeloEmail,
+  BuscarPeloId,
+  Delete,
   StoreUsuario,
   Update,
   Usuarios,
@@ -21,67 +22,22 @@ export async function BuscarUsuarioPeloEmail(email: string) {
   return await BuscarPeloEmail(email)
 }
 
-export async function CriarUsuario(attributes: UsuarioType) {
-  const schema = z.object({
-    nome: z.string(),
-    email: z.string(),
-    password: z.string(),
-  })
-
-  const formValidate = schema.safeParse(attributes)
-
-  if (!formValidate.success) {
-    const errors = formValidate.error.formErrors
-
-    return {
-      isValid: false,
-      errors,
-    }
-  }
-
-  await StoreUsuario(attributes)
-
-  const usuario = await BuscarPeloEmail(attributes.email)
-
-  return {
-    isValid: true,
-    errors: null,
-    usuario,
-  }
+export async function BuscarUsuarioPeloId(id: string) {
+  return await BuscarPeloId(id)
 }
 
-export async function update(attributes: UsuarioType) {
-  const schema = z.object({
-    nome: z.string(),
-    email: z.string(),
-    password: z.string().min(8).optional(),
-  })
+export async function CriarUsuario(attributes: UsuarioType) {
+  await StoreUsuario(attributes)
 
-  const formValidate = schema.safeParse(attributes)
+  return await BuscarPeloEmail(attributes.email)
+}
 
-  if (!formValidate.success) {
-    const errors = formValidate.error.formErrors
+export async function update(id: string, attributes: UsuarioType) {
+  await Update({ id, attributes })
 
-    return {
-      isValid: false,
-      errors,
-    }
-  }
+  return await BuscarPeloId(id)
+}
 
-  const usuario = await BuscarPeloEmail(attributes.email)
-
-  if (!usuario) {
-    return {
-      isValid: false,
-      errors: { status: 404, message: 'Usuário não encontrado!' },
-    }
-  }
-
-  await Update({ id: usuario.id, attributes })
-
-  return {
-    isValid: true,
-    errors: null,
-    usuario,
-  }
+export async function destroy(id: string) {
+  await Delete(id)
 }
