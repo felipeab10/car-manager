@@ -16,6 +16,9 @@ export async function ProcurarPeloId(id: string | number) {
 export async function ProcurarPeloNome(nome: string) {
   return await db.query.modelos.findFirst({
     where: eq(modelos.nome, nome),
+    with: {
+      marca: true,
+    },
   })
 }
 
