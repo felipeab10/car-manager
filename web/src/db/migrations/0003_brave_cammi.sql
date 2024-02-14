@@ -1,0 +1,1 @@
+ALTER TABLE `carros` ADD CONSTRAINT `placaUnique` UNIQUE(`placa`);

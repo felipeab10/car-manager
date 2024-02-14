@@ -27,6 +27,14 @@ export async function BuscarPeloId(id: string) {
     columns: {
       password: false,
     },
+    with: {
+      carros: {
+        with: {
+          marca: true,
+          modelo: true,
+        },
+      },
+    },
   })
 }
 
