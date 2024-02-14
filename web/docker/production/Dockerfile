@@ -53,4 +53,4 @@ EXPOSE 3000
 #ENV HOSTNAME localhost
 
 # CMD ["node", "server.js"]
-CMD ["npm","run" "start"]
+CMD ["npm","run" ,"start"]
