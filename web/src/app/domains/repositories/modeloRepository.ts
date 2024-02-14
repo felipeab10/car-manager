@@ -10,6 +10,9 @@ export async function TodosModelos() {
 export async function ProcurarPeloId(id: string | number) {
   return await db.query.modelos.findFirst({
     where: eq(modelos.id, Number(id)),
+    with: {
+      marca: true,
+    },
   })
 }
 
