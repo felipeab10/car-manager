@@ -1,5 +1,9 @@
 import { BuscarPeloId } from '@/app/domains/repositories/usuarioRepository'
-import { destroy, update } from '@/app/domains/services/usuarioService'
+import {
+  BuscarUsuarioPeloId,
+  destroy,
+  update,
+} from '@/app/domains/services/usuarioService'
 import { NextRequest, NextResponse } from 'next/server'
 import z from 'zod'
 
@@ -8,7 +12,8 @@ export async function GET(
   context: { params: { id: string } },
 ) {
   const id = context.params.id
-  const usuario = await BuscarPeloId(id)
+
+  const usuario = await BuscarUsuarioPeloId(id)
 
   return NextResponse.json(usuario)
 }

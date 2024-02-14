@@ -1,0 +1,1 @@
+CREATE INDEX `placaIndex` ON `carros` (`placa`);

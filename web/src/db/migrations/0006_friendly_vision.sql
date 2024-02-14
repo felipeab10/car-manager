@@ -1,0 +1,1 @@
+ALTER TABLE `carros` ADD `image` varchar(256);

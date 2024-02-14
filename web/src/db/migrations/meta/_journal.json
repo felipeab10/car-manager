@@ -8,6 +8,48 @@
       "when": 1707748323314,
       "tag": "0000_green_tomas",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1707917813155,
+      "tag": "0001_icy_sasquatch",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1707919293419,
+      "tag": "0002_worried_firestar",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1707919342776,
+      "tag": "0003_brave_cammi",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1707920144917,
+      "tag": "0004_tired_taskmaster",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1707920876011,
+      "tag": "0005_nebulous_lily_hollister",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1707921250001,
+      "tag": "0006_friendly_vision",
+      "breakpoints": true
     }
   ]
 }
