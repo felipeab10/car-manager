@@ -6,12 +6,7 @@ import mysql from 'mysql2/promise'
 
 dotenv.config({ path: '.env.local' })
 
-if (
-  !process.env.DATABASE_HOST ||
-  !process.env.DATABASE_USERNAME ||
-  !process.env.DATABASE_NAME ||
-  !process.env.DATABASE_PASSWORD
-) {
+if (!process.env.DATABASE_URL) {
   throw new Error('Database credentials missing.')
 }
 
