@@ -1,5 +1,5 @@
 import { db } from '@/db'
-import { marcas, modelos } from '@/db/schema'
+import { modelos } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 import { ModeloType } from '../services/modeloService'
 
@@ -8,18 +8,18 @@ export async function TodosModelos() {
 }
 
 export async function ProcurarPeloId(id: string | number) {
-  return await db
-    .select()
-    .from(modelos)
-    .innerJoin(marcas, eq(modelos.marca_id, marcas.id))
-    .where(eq(modelos.id, Number(id)))
+  // return await db
+  //   .select()
+  //   .from(modelos)
+  //   .innerJoin(marcas, eq(modelos.marca_id, marcas.id))
+  //   .where(eq(modelos.id, Number(id)))
 
-  // return await db.query.modelos.findFirst({
-  //   where: eq(modelos.id, Number(id)),
-  //   with: {
-  //     marca: true,
-  //   },
-  // })
+  return await db.query.modelos.findFirst({
+    where: eq(modelos.id, Number(id)),
+    with: {
+      marca: true,
+    },
+  })
 }
 
 export async function ProcurarPeloNome(nome: string) {
