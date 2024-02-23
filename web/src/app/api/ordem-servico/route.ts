@@ -2,7 +2,7 @@ import { index, store } from '@/app/domains/services/ordemServicoService'
 import { NextRequest, NextResponse } from 'next/server'
 import z from 'zod'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const ordensServicos = await index()
 
   return NextResponse.json(ordensServicos)
