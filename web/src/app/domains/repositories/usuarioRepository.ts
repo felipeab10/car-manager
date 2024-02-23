@@ -1,8 +1,8 @@
 import { db } from '@/db'
-import { users } from '@/db/schema'
 import bcrypt from 'bcrypt'
 import { eq } from 'drizzle-orm'
 import { UsuarioType } from '../services/usuarioService'
+import { users } from '@/db/schemas'
 
 export async function Usuarios() {
   return await db.query.users.findMany({

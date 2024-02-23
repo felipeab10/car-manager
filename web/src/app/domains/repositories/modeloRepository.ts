@@ -1,7 +1,7 @@
 import { db } from '@/db'
-import { modelos } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 import { ModeloType } from '../services/modeloService'
+import { modelos } from '@/db/schemas'
 
 export async function TodosModelos() {
   return await db.query.modelos.findMany()

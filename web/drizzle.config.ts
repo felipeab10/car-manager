@@ -10,6 +10,6 @@ if (!process.env.DATABASE_URL) {
 
 export default {
   out: './src/db/migrations',
-  schema: './src/db/schema.ts',
+  schema: './src/db/schemas/*',
   breakpoints: true,
 } satisfies Config

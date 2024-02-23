@@ -1,4 +1,4 @@
-import * as schema from '@/db/schema'
+import * as schema from '@/db/schemas/index'
 import dotenv from 'dotenv'
 
 import { drizzle } from 'drizzle-orm/mysql2'

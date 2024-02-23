@@ -50,6 +50,13 @@
       "when": 1707921250001,
       "tag": "0006_friendly_vision",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1708523031207,
+      "tag": "0007_far_jack_murdock",
+      "breakpoints": true
     }
   ]
 }

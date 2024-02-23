@@ -1,7 +1,7 @@
 import { db } from '@/db'
-import { marcas } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 import { MarcaType } from '../services/marcaService'
+import { marcas } from '@/db/schemas'
 
 export async function procurarPeloId(id: string) {
   return await db.query.marcas.findFirst({
