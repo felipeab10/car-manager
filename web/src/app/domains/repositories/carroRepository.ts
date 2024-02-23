@@ -1,7 +1,7 @@
 import { db } from '@/db'
-import { carros } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 import { CarroType } from '../services/carroService'
+import { carros } from '@/db/schemas'
 
 export class CarroRepository {
   async findAll() {
@@ -35,6 +35,7 @@ export class CarroRepository {
       with: {
         marca: true,
         modelo: true,
+        OrdemServicos: true,
       },
     })
   }

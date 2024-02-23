@@ -1,5 +1,5 @@
 import { db } from '@/db'
-import { marcas, modelos } from '@/db/schema'
+import { marcas, modelos } from '@/db/schemas'
 import { sql } from 'drizzle-orm'
 import { NextResponse } from 'next/server'
 const ENDPOINT = 'https://veiculos.fipe.org.br/api/veiculos'
