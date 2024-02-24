@@ -28,7 +28,6 @@ const authOptions: NextAuthOptions = {
         sameSite: 'lax',
         path: '/',
         secure: true,
-        domain: hostName === 'localhost' ? hostName : '.' + hostName, // add a . in front so that subdomains are included
       },
     },
 
@@ -39,7 +38,6 @@ const authOptions: NextAuthOptions = {
         sameSite: 'lax',
         path: '/',
         secure: true,
-        domain: hostName === 'localhost' ? hostName : '.' + hostName, // add a . in front so that subdomains are included
       },
     },
 
@@ -50,7 +48,6 @@ const authOptions: NextAuthOptions = {
         sameSite: 'lax',
         path: '/',
         secure: true,
-        domain: hostName === 'localhost' ? hostName : '.' + hostName, // add a . in front so that subdomains are included
       },
     },
   },
