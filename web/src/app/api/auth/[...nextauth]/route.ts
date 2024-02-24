@@ -3,17 +3,6 @@ import { NextAuthOptions } from 'next-auth'
 import NextAuth from 'next-auth/next'
 import CredentialProvider from 'next-auth/providers/credentials'
 
-const obtenerDominio = (url: string) => {
-  const dominio = new URL(url).hostname.split('.')
-  return dominio
-    .slice(0)
-    .slice(-(dominio.length === 4 ? 3 : 2))
-    .join('.')
-}
-
-const useSecureCookies = process.env.NEXTAUTH_URL?.startsWith('https://')
-const hostName = obtenerDominio(process.env.NEXTAUTH_URL ?? '')
-
 const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
