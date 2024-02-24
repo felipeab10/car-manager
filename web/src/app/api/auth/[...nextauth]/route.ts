@@ -1,3 +1,4 @@
+import { authenticate } from '@/lib/authenticate'
 import { NextAuthOptions } from 'next-auth'
 import NextAuth from 'next-auth/next'
 import CredentialProvider from 'next-auth/providers/credentials'
@@ -14,39 +15,23 @@ const authOptions: NextAuthOptions = {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-
       async authorize(credentials) {
-        const user = {
-          id: '1',
-          email: 'user@email.com',
-          password: '123',
-          name: 'User Hardcoded',
-          role: 'admin',
-        }
-
-        const isValidEmail = user.email === credentials?.email
-        const isValidPassword = user.password === credentials?.password
-
-        if (!isValidEmail || !isValidPassword) {
-          return null
-        }
-
-        return user
+        return await authenticate({
+          email: credentials?.email,
+          password: credentials?.password,
+        })
       },
     }),
   ],
   callbacks: {
     jwt: async ({ token, user }) => {
       /* eslint-disable  @typescript-eslint/no-explicit-any */
-      const customUser = user as unknown as any
-
+      // const customUser = user as unknown as any
       if (user) {
         return {
           ...token,
-          role: customUser.role,
         }
       }
-
       return token
     },
     session: async ({ session, token }) => {
@@ -56,7 +41,6 @@ const authOptions: NextAuthOptions = {
         user: {
           name: token.name,
           email: token.email,
-          role: token.role,
         },
       }
     },
