@@ -12,7 +12,6 @@ const obtenerDominio = (url: string) => {
 }
 
 const useSecureCookies = process.env.NEXTAUTH_URL?.startsWith('https://')
-const cookiePrefix = useSecureCookies ? '__Secure-' : ''
 const hostName = obtenerDominio(process.env.NEXTAUTH_URL ?? '')
 
 const authOptions: NextAuthOptions = {
@@ -23,34 +22,34 @@ const authOptions: NextAuthOptions = {
   // useSecureCookies: true,
   cookies: {
     sessionToken: {
-      name: `${cookiePrefix}next-auth.session-token`,
+      name: `next-auth.session-token`,
       options: {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: useSecureCookies,
+        secure: true,
         domain: hostName === 'localhost' ? hostName : '.' + hostName, // add a . in front so that subdomains are included
       },
     },
 
     callbackUrl: {
-      name: `${cookiePrefix}next-auth.callback-url`,
+      name: `next-auth.callback-url`,
       options: {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: useSecureCookies,
+        secure: true,
         domain: hostName === 'localhost' ? hostName : '.' + hostName, // add a . in front so that subdomains are included
       },
     },
 
     csrfToken: {
-      name: `${cookiePrefix}next-auth.csrf-token`,
+      name: `next-auth.csrf-token`,
       options: {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: false,
+        secure: true,
         domain: hostName === 'localhost' ? hostName : '.' + hostName, // add a . in front so that subdomains are included
       },
     },
