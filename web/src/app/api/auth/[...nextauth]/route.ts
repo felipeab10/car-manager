@@ -3,7 +3,7 @@ import { NextAuthOptions } from 'next-auth'
 import NextAuth from 'next-auth/next'
 import CredentialProvider from 'next-auth/providers/credentials'
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
     maxAge: 60 * 60 * 4, // 4 horas
@@ -43,6 +43,7 @@ const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialProvider({
+      id: 'credentials',
       name: 'Credentials',
       credentials: {
         email: { label: 'Email', type: 'email' },
@@ -58,22 +59,17 @@ const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     jwt: async ({ token, user }) => {
-      /* eslint-disable  @typescript-eslint/no-explicit-any */
-      // const customUser = user as unknown as any
       if (user) {
-        return {
-          ...token,
-        }
+        token = { ...token, ...user }
       }
+
       return token
     },
     session: async ({ session, token }) => {
-      // console.log(session)
       return {
         ...session,
         user: {
-          name: token.name,
-          email: token.email,
+          ...token,
         },
       }
     },

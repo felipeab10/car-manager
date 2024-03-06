@@ -50,7 +50,6 @@ export async function POST(request: NextRequest) {
 
   try {
     const carro = await store(params)
-    console.log(carro)
 
     return NextResponse.json({ status: 'success', carro }, { status: 201 })
   } catch (error) {

@@ -1,21 +1,73 @@
 import { NextAuthMiddlewareOptions, withAuth } from 'next-auth/middleware'
+import { getToken } from 'next-auth/jwt'
+import { NextRequest, NextResponse } from 'next/server'
 
-const middleware = () => {
-  // request: NextRequestWithAuth
-  console.log('teste1')
-  // const isPrivateRoutes = request.nextUrl.pathname.startsWith('/api/marcas')
-  // if (isPrivateRoutes) {
-  //   return NextResponse.json('teta')
-  // }
+interface RouteProps {
+  path: string
+  permissao: string
 }
 
-const callbackOptions: NextAuthMiddlewareOptions = {}
+const paths: RouteProps[] = [
+  { path: '/api/usuarios', permissao: 'api_listar_usuarios' },
+  { path: '/api/usuarios/[id]', permissao: 'api_visualizar_usuarios' },
+]
+
+export async function middleware(request: NextRequest) {
+  const token = await getToken({
+    req: request,
+    secret: process.env.SECRET,
+  })
+
+  const pathname = request.nextUrl.pathname
+
+  if (token) {
+    const path = paths.find((path) => {
+      if (path.path.includes('[id]')) {
+        const regex = new RegExp(`^${path.path.replace('[id]', '\\w+')}$`)
+
+        return regex.test(pathname)
+      }
+      return path.path === pathname
+    })
+
+    const userPermissions = token.permissoes || []
+
+    const hasPermission = userPermissions.find(
+      (permissao) => permissao.nome === path?.permissao,
+    )
+
+    if (!hasPermission && !pathname.includes('/api')) {
+      const url = new URL(`/auth/403`, request.url)
+      return NextResponse.rewrite(url)
+    }
+
+    if (!hasPermission && pathname.includes('/api')) {
+      return NextResponse.json({
+        shortMessage: 'ACESSONEGADO',
+        message: 'Seu usuário não possui permissao',
+      })
+    }
+  }
+
+  if (!token && !pathname.includes('api/auth')) {
+    const url = new URL(`/auth/login`, request.url)
+
+    return NextResponse.redirect(url)
+  }
+
+  return NextResponse.next()
+}
+
+const callbackOptions: NextAuthMiddlewareOptions = {
+  callbacks: {
+    authorized: ({ token }) => !!token,
+  },
+}
 
 export default withAuth(middleware, callbackOptions)
 
 export const config = {
   matcher: [
-    '/((?!auth/login|auth/register|_next/static|_next/image|favicon.ico).*)',
+    '/((?!auth/login|auth/register|auth/403|_next/static|_next/image|favicon.ico).*)',
   ],
-  // matcher: ['/api/:path*'],
 }
