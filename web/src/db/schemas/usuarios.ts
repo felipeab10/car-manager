@@ -9,6 +9,7 @@ import {
 } from 'drizzle-orm/mysql-core'
 import { relations } from 'drizzle-orm'
 import { carros } from '.'
+import { usuarioRegra } from './usuarioRegra'
 
 export const users = mysqlTable(
   'usuarios',
@@ -30,4 +31,5 @@ export const users = mysqlTable(
 
 export const usuariosRelations = relations(users, ({ many }) => ({
   carros: many(carros),
+  regras: many(usuarioRegra),
 }))
