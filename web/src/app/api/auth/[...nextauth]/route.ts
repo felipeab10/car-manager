@@ -3,7 +3,7 @@ import { NextAuthOptions } from 'next-auth'
 import NextAuth from 'next-auth/next'
 import CredentialProvider from 'next-auth/providers/credentials'
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
     maxAge: 60 * 60 * 4, // 4 horas
@@ -43,7 +43,6 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialProvider({
-      id: 'credentials',
       name: 'Credentials',
       credentials: {
         email: { label: 'Email', type: 'email' },
