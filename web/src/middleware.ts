@@ -21,7 +21,21 @@ export async function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname
 
-  if (token?.permissoes) {
+  const path = paths.find((path) => {
+    if (path.path.includes('[id]')) {
+      const regex = new RegExp(`^${path.path.replace('[id]', '\\w+')}$`)
+
+      return regex.test(pathname)
+    }
+    return path.path === pathname
+  })
+
+  if (!token && path?.path) {
+    const url = new URL(`/auth/login`, request.url)
+    return NextResponse.redirect(url)
+  }
+
+  if (token) {
     const path = paths.find((path) => {
       if (path.path.includes('[id]')) {
         const regex = new RegExp(`^${path.path.replace('[id]', '\\w+')}$`)
@@ -49,21 +63,9 @@ export async function middleware(request: NextRequest) {
       })
     }
   }
-
-  if (!token && !pathname.includes('api/auth')) {
-    const url = new URL(`/auth/login`, request.url)
-
-    return NextResponse.redirect(url)
-  }
-
-  return NextResponse.next()
 }
 
-const callbackOptions: NextAuthMiddlewareOptions = {
-  callbacks: {
-    authorized: ({ token }) => !!token,
-  },
-}
+const callbackOptions: NextAuthMiddlewareOptions = {}
 
 export default withAuth(middleware, callbackOptions)
 

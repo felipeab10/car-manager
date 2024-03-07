@@ -12,8 +12,6 @@ export async function authenticate({ email, password }: authenticateProps) {
     return null
   }
 
-  console.log(email)
-
   const user = await db.query.users.findFirst({
     where: eq(users.email, email),
     with: {
