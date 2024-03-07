@@ -20,9 +20,8 @@ export async function middleware(request: NextRequest) {
   })
 
   const pathname = request.nextUrl.pathname
-  console.log(pathname)
 
-  if (token) {
+  if (token?.permissoes) {
     const path = paths.find((path) => {
       if (path.path.includes('[id]')) {
         const regex = new RegExp(`^${path.path.replace('[id]', '\\w+')}$`)
@@ -61,9 +60,9 @@ export async function middleware(request: NextRequest) {
 }
 
 const callbackOptions: NextAuthMiddlewareOptions = {
-  // callbacks: {
-  //   authorized: ({ token }) => !!token,
-  // },
+  callbacks: {
+    authorized: ({ token }) => !!token,
+  },
 }
 
 export default withAuth(middleware, callbackOptions)
