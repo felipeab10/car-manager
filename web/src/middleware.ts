@@ -20,6 +20,7 @@ export async function middleware(request: NextRequest) {
   })
 
   const pathname = request.nextUrl.pathname
+  console.log(pathname)
 
   if (token) {
     const path = paths.find((path) => {
@@ -60,9 +61,9 @@ export async function middleware(request: NextRequest) {
 }
 
 const callbackOptions: NextAuthMiddlewareOptions = {
-  callbacks: {
-    authorized: ({ token }) => !!token,
-  },
+  // callbacks: {
+  //   authorized: ({ token }) => !!token,
+  // },
 }
 
 export default withAuth(middleware, callbackOptions)
