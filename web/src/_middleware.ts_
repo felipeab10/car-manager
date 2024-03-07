@@ -9,6 +9,7 @@ interface RouteProps {
 
 const paths: RouteProps[] = [
   { path: '/api/usuarios', permissao: 'api_listar_usuarios' },
+  { path: '/', permissao: 'api_listar_usuarios' },
   { path: '/api/usuarios/[id]', permissao: 'api_visualizar_usuarios' },
 ]
 
@@ -68,6 +69,6 @@ export default withAuth(middleware, callbackOptions)
 
 export const config = {
   matcher: [
-    '/((?!auth/login|auth/register|auth/403|_next/static|_next/image|favicon.ico).*)',
+    '/((?!auth/login|auth/register|auth/403|api/auth|_next/static|_next/image|favicon.ico).*)',
   ],
 }
