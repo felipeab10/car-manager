@@ -23,6 +23,10 @@ export default function Login() {
 
       console.log('[LOGIN_RESPONSE]: ', response)
 
+      if (response?.error?.includes('connect')) {
+        alert('Erro ao conectar ao banco de dados!')
+      }
+
       if (!response?.error) {
         router.refresh()
         router.push('/')
