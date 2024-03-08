@@ -25,6 +25,10 @@ export async function authenticate({ email, password }: authenticateProps) {
     },
   })
 
+  if (!user) {
+    throw new Error('USER_NOT_FOUND')
+  }
+
   const permissoes = await db.query.regraPermissoes.findMany({
     where: inArray(
       regraPermissoes.regra_id,
@@ -40,14 +44,10 @@ export async function authenticate({ email, password }: authenticateProps) {
     },
   })
 
-  if (!user) {
-    return null
-  }
-
   const match = await bcrypt.compare(password, user.password)
 
   if (!match) {
-    return null
+    throw new Error('INVALID_CREDENTIALS')
   }
 
   return {
