@@ -11,7 +11,9 @@ export interface UsuarioType {
   nome: string
   email: string
   password: string
-  ativo?: boolean
+  imagem_profile?: string | null
+  ativo?: boolean | null
+  regraId?: number
 }
 
 export async function TodosUsuarios() {
@@ -27,6 +29,16 @@ export async function BuscarUsuarioPeloId(id: string) {
 }
 
 export async function CriarUsuario(attributes: UsuarioType) {
+  const usuarioExist = await BuscarUsuarioPeloEmail(attributes.email)
+
+  if (usuarioExist) {
+    return {
+      message: 'USER_ALREADY_CREATED',
+      code: 422,
+      error: true,
+    }
+  }
+
   await StoreUsuario(attributes)
 
   return await BuscarPeloEmail(attributes.email)

@@ -20,6 +20,10 @@ export async function middleware(request: NextRequest) {
     return path.path === pathname
   })
 
+  if (publicPaths.some((publicPath) => publicPath === pathname)) {
+    return NextResponse.next()
+  }
+
   if (!token && path?.path) {
     const url = new URL(`/`, request.url)
     return NextResponse.redirect(url)
@@ -33,7 +37,7 @@ export async function middleware(request: NextRequest) {
     )
 
     if (!hasPermission && !publicPaths.some((path) => path)) {
-      const url = new URL(`/auth/403`, request.url)
+      const url = new URL(`/403`, request.url)
       return NextResponse.rewrite(url)
     }
 
@@ -52,6 +56,6 @@ export default withAuth(middleware, callbackOptions)
 
 export const config = {
   matcher: [
-    '/((?!auth/login|auth/register|auth/403|api/auth|_next/static|_next/image|favicon.ico).*)',
+    '/((?!login|register|403|api/auth|_next/static|_next/image|favicon.ico).*)',
   ],
 }

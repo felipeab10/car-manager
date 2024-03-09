@@ -2,7 +2,7 @@ import { db } from '@/db'
 import bcrypt from 'bcrypt'
 import { eq, inArray } from 'drizzle-orm'
 import { UsuarioType } from '../services/usuarioService'
-import { regraPermissoes, users } from '@/db/schemas'
+import { regraPermissoes, users, usuarioRegra } from '@/db/schemas'
 
 export async function Usuarios() {
   return await db.query.users.findMany({
@@ -77,6 +77,22 @@ export async function StoreUsuario(attributes: UsuarioType) {
   const hashedPassword = await bcrypt.hash(attributes.password, 10)
 
   await db.insert(users).values({ ...attributes, password: hashedPassword })
+
+  const user = await BuscarPeloEmail(attributes.email)
+
+  if (!user) {
+    return null
+  }
+
+  let regraId = 2
+
+  if (attributes.regraId) {
+    regraId = attributes.regraId
+  }
+
+  await db
+    .insert(usuarioRegra)
+    .values({ regra_id: regraId, usuario_id: user.id })
 }
 
 interface UpdateUserProps {

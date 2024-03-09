@@ -9,4 +9,4 @@ export const privatePaths: RouteProps[] = [
   { path: '/api/usuarios/[id]', permissao: 'api_visualizar_usuarios' },
 ]
 
-export const publicPaths = ['/api', '/']
+export const publicPaths = ['/api', '/', '/login', '/signup']

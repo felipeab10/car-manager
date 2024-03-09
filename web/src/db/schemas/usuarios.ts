@@ -7,7 +7,7 @@ import {
   unique,
   varchar,
 } from 'drizzle-orm/mysql-core'
-import { relations } from 'drizzle-orm'
+import { InferSelectModel, relations } from 'drizzle-orm'
 import { carros } from '.'
 import { usuarioRegra } from './usuarioRegra'
 
@@ -33,3 +33,5 @@ export const usuariosRelations = relations(users, ({ many }) => ({
   carros: many(carros),
   regras: many(usuarioRegra),
 }))
+
+export type usuarioType = InferSelectModel<typeof users>
