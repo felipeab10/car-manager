@@ -48,6 +48,10 @@ export async function authenticate({ email, password }: authenticateProps) {
     })
   } catch (error) {}
 
+  if (!user.ativo) {
+    throw new Error('USER_NOT_ACTIVE')
+  }
+
   const match = await bcrypt.compare(password, user.password)
 
   if (!match) {

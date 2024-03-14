@@ -7,7 +7,7 @@ import { useToast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
 
 import { CreateUserAction } from '@/app/actions/users/create'
-import { signIn } from 'next-auth/react'
+import { SendConfirmationAccount } from '@/app/actions/emails/sendConfirmationAccount'
 
 export function useSignup() {
   const { toast } = useToast()
@@ -36,16 +36,14 @@ export function useSignup() {
       })
     }
 
-    const loginResponse = await signIn('credentials', {
-      redirect: false,
-      email,
-      password,
-    })
-
-    if (!loginResponse?.error) {
-      router.refresh()
-      router.push('/')
+    if (!response?.error) {
+      SendConfirmationAccount({
+        to: email,
+        subject: 'Verificação de E-mail | Car-Manager',
+      })
     }
+
+    router.push(`/signup/confirmation?email=${email}`)
   })
 
   return {

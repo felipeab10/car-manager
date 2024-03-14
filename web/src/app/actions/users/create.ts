@@ -11,6 +11,7 @@ export interface UsuarioResponseType {
   ativo?: boolean | null
   error?: boolean
   message?: string
+  active_token?: string
 }
 
 interface UsuarioCreateType {

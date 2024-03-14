@@ -49,6 +49,15 @@ export function useLogin() {
         })
       }
 
+      if (response?.error === 'USER_NOT_ACTIVE') {
+        toast({
+          title: 'Ops!',
+          description: 'Email não está ativado',
+        })
+
+        router.push(`/signup/confirmation?email=${email}`)
+      }
+
       if (response?.error === 'USER_NOT_FOUND') {
         toast({
           title: 'Ops!',

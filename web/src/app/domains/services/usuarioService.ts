@@ -14,6 +14,7 @@ export interface UsuarioType {
   imagem_profile?: string | null
   ativo?: boolean | null
   regraId?: number
+  active_token?: string
 }
 
 export async function TodosUsuarios() {
@@ -38,6 +39,10 @@ export async function CriarUsuario(attributes: UsuarioType) {
       error: true,
     }
   }
+
+  attributes.active_token = Math.floor(
+    100000 + Math.random() * 900000,
+  ).toString()
 
   await StoreUsuario(attributes)
 
