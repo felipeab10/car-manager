@@ -1,21 +1,28 @@
 import { useToast } from '@/components/ui/use-toast'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { LoginSchema, LoginSchemaType } from './schema'
 
 export function useLogin() {
+  const methods = useForm<LoginSchemaType>({
+    criteriaMode: 'all',
+    mode: 'all',
+    resolver: zodResolver(LoginSchema),
+  })
+
+  const { watch, handleSubmit } = methods
+  const { email, password } = watch()
+
   const router = useRouter()
 
   const { data } = useSession()
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
   const { toast } = useToast()
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-
+  const handleLogin: () => void = handleSubmit(async () => {
     try {
       const response = await signIn('credentials', {
         redirect: false,
@@ -42,6 +49,15 @@ export function useLogin() {
         })
       }
 
+      if (response?.error === 'USER_NOT_ACTIVE') {
+        toast({
+          title: 'Ops!',
+          description: 'Email não está ativado',
+        })
+
+        router.push(`/signup/confirmation?email=${email}`)
+      }
+
       if (response?.error === 'USER_NOT_FOUND') {
         toast({
           title: 'Ops!',
@@ -51,7 +67,7 @@ export function useLogin() {
     } catch (error) {
       console.log('[LOGIN_ERROR]: ', error)
     }
-  }
+  })
 
   useEffect(() => {
     if (data?.user.email) {
@@ -60,8 +76,7 @@ export function useLogin() {
   }, [router, data?.user.email])
 
   return {
-    setEmail,
-    setPassword,
     handleLogin,
+    methods,
   }
 }

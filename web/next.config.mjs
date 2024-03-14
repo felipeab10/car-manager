@@ -2,7 +2,7 @@
 
 const nextConfig = {
   output: 'standalone',
-  experimental: { esmExternals: 'loose' },
+  experimental: { esmExternals: 'loose', missingSuspenseWithCSRBailout: false },
 }
 
 export default nextConfig

@@ -29,20 +29,28 @@ export async function authenticate({ email, password }: authenticateProps) {
     throw new Error('USER_NOT_FOUND')
   }
 
-  const permissoes = await db.query.regraPermissoes.findMany({
-    where: inArray(
-      regraPermissoes.regra_id,
-      user?.regras.map((r) => r.id) || [],
-    ),
-    columns: {
-      id: false,
-      regra_id: false,
-      permissao_id: false,
-    },
-    with: {
-      permissao: true,
-    },
-  })
+  let permissoes = null
+
+  try {
+    permissoes = await db.query.regraPermissoes.findMany({
+      where: inArray(
+        regraPermissoes.regra_id,
+        user?.regras.map((r) => r.id) || [],
+      ),
+      columns: {
+        id: false,
+        regra_id: false,
+        permissao_id: false,
+      },
+      with: {
+        permissao: true,
+      },
+    })
+  } catch (error) {}
+
+  if (!user.ativo) {
+    throw new Error('USER_NOT_ACTIVE')
+  }
 
   const match = await bcrypt.compare(password, user.password)
 
@@ -52,7 +60,7 @@ export async function authenticate({ email, password }: authenticateProps) {
 
   return {
     ...user,
-    permissoes: permissoes.map((item) => item.permissao),
+    permissoes: permissoes?.map((item) => item.permissao),
     name: user.nome,
     id: String(user.id),
   }

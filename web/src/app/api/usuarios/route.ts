@@ -17,6 +17,12 @@ export async function POST(request: NextRequest) {
     nome: z.string(),
     email: z.string(),
     password: z.string(),
+    regraId: z
+      .custom<number | string>()
+      .refine((value) => value ?? false, 'Required')
+      .refine((value) => Number.isFinite(Number(value)), 'Invalid number')
+      .transform((value) => Number(value))
+      .optional(),
   })
 
   const formValidate = schema.safeParse(params)
