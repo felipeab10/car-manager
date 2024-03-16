@@ -17,19 +17,25 @@ export async function sendMail({ to, subject, body }: sendMailType) {
     },
   })
 
+  console.log('transport', transport)
+
   try {
-    await transport.verify()
+    const transportVerify = await transport.verify()
+
+    console.log('transportVerify', transportVerify)
   } catch (error) {
     console.log(error)
   }
 
   try {
-    await transport.sendMail({
+    const trasportSend = await transport.sendMail({
       from: SMTP_EMAIL,
       to,
       subject,
       html: body,
     })
+
+    console.log('trasportSend', trasportSend)
   } catch (error) {
     console.log(error)
   }

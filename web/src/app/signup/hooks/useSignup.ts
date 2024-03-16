@@ -29,8 +29,7 @@ export function useSignup() {
 
     CreateUserAction(params).then((resp) => {
       const response = JSON.parse(resp)
-      console.log('resp', resp)
-      console.log('response', response)
+
       if (response?.error && response?.message === 'USER_ALREADY_CREATED') {
         toast({
           title: 'Ops!',
