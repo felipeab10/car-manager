@@ -1,4 +1,7 @@
 import nodemailer from 'nodemailer'
+import dotenv from 'dotenv'
+
+dotenv.config({ path: '.env.local' })
 
 interface sendMailType {
   to: string
@@ -8,6 +11,8 @@ interface sendMailType {
 
 export async function sendMail({ to, subject, body }: sendMailType) {
   const { SMTP_PASSWORD, SMTP_EMAIL } = process.env
+
+  console.log('SMTP_EMAIL', SMTP_EMAIL)
 
   const transport = nodemailer.createTransport({
     service: 'gmail',
