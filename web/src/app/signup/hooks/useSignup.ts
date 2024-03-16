@@ -27,7 +27,10 @@ export function useSignup() {
   const create: () => void = handleSubmit(async () => {
     const params = { nome, email, password }
 
-    CreateUserAction(params).then((response) => {
+    CreateUserAction(params).then((resp) => {
+      const response = JSON.parse(resp)
+      console.log('resp', resp)
+      console.log('response', response)
       if (response?.error && response?.message === 'USER_ALREADY_CREATED') {
         toast({
           title: 'Ops!',
