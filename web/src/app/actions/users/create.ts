@@ -22,12 +22,10 @@ interface UsuarioCreateType {
   ativo?: boolean | null
 }
 
-export async function CreateUserAction(
-  formData: UsuarioCreateType,
-): Promise<UsuarioResponseType | undefined> {
+export async function CreateUserAction(formData: UsuarioCreateType) {
   try {
-    return (await CriarUsuario(formData)) as UsuarioResponseType
+    return JSON.stringify(await CriarUsuario(formData))
   } catch (error) {
-    return error as UsuarioResponseType
+    return JSON.stringify(error)
   }
 }
