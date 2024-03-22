@@ -17,8 +17,8 @@ export async function authenticate({ email, password }: authenticateProps) {
     with: {
       regras: {
         columns: {
-          id: true,
-          regra_id: false,
+          id: false,
+          regra_id: true,
           usuario_id: false,
         },
       },
@@ -35,7 +35,7 @@ export async function authenticate({ email, password }: authenticateProps) {
     permissoes = await db.query.regraPermissoes.findMany({
       where: inArray(
         regraPermissoes.regra_id,
-        user?.regras.map((r) => r.id) || [],
+        user?.regras.map((r) => r.regra_id) || [],
       ),
       columns: {
         id: false,

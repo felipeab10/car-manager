@@ -6,7 +6,7 @@ export default function Forbidden() {
       <h1 className="font-bold text-8xl">403</h1>
       <span className=" text-xl">
         Você não possui permissão para acessar essa página, retorne para o
-        <Link href="/"> dashboard.</Link>
+        <Link href="/dashboard"> dashboard.</Link>
       </span>
     </div>
   )
