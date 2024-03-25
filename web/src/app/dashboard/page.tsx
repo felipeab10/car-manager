@@ -1,3 +1,5 @@
+'use client'
+
 import { AppLayout } from '../layouts/appLayout'
 
 export default function Dashboard() {
