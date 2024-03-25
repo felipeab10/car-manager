@@ -10,8 +10,11 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
+import { useUser } from '@/app/hooks/useUser'
 
 export function Profile() {
+  const { user } = useUser()
+
   return (
     <div className="flex mr-2">
       <DropdownMenu>
@@ -21,8 +24,10 @@ export function Profile() {
             className="text-zinc-100 p-0 outline-none focus:border-none decoration-0 "
           >
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage src={user.imagem_profile ?? ''} />
+              <AvatarFallback className="bg-zinc-800 text-zinc-300">
+                <span className="text-[10px]">{user.nome}</span>
+              </AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
@@ -30,12 +35,14 @@ export function Profile() {
           <div className="flex flex-col w-full  pb-4">
             <div className="flex gap-4 p-4">
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarImage src={user.imagem_profile ?? ''} />
+                <AvatarFallback className="bg-zinc-700 text-zinc-300">
+                  <span className="text-[10px]">{user.nome}</span>
+                </AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
-                <span className="font-bold">Felipe Almeida Batista</span>
-                <span className="text-sm">felipeab10@hotmail.com</span>
+                <span className="font-bold">{user.nome}</span>
+                <span className="text-sm">{user.email}</span>
               </div>
             </div>
             <Separator className="bg-zinc-700" />
