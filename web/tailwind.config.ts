@@ -11,15 +11,10 @@ const config = {
   prefix: '',
   theme: {
     screens: {
-      mobile: '350px',
-      tablet: '640px',
-      // => @media (min-width: 640px) { ... }
-
-      laptop: '1024px',
-      // => @media (min-width: 1024px) { ... }
-
-      desktop: '1280px',
-      // => @media (min-width: 1280px) { ... }
+      mobile: { min: '0px', max: '639px' },
+      tablet: { min: '351px', max: '1024px' },
+      laptop: { min: '1025px', max: '1980px' },
+      desktop: { min: '1981px', max: '3000px' },
     },
     container: {
       center: true,

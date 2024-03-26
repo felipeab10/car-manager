@@ -1,7 +1,7 @@
 'use client'
 
 import { CardFooter, CardHeader } from '@/components/ui/card'
-import AuthLayout from '../authLayout'
+import AuthLayout from '../layouts/authLayout'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'

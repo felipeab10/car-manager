@@ -30,11 +30,6 @@ export function useLogin() {
         password,
       })
 
-      if (!response?.error) {
-        router.refresh()
-        router.push('/')
-      }
-
       if (response?.error?.includes('connect')) {
         toast({
           title: 'Ops!',
@@ -71,7 +66,7 @@ export function useLogin() {
 
   useEffect(() => {
     if (data?.user.email) {
-      router.push('/')
+      router.push('/dashboard')
     }
   }, [router, data?.user.email])
 

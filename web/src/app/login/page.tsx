@@ -8,7 +8,7 @@ import { Separator } from '@/components/ui/separator'
 import { FaCarSide } from 'react-icons/fa'
 import { FormLogin } from './components/FormLogin'
 import { useLogin } from './hooks/useLogin'
-import AuthLayout from '../authLayout'
+import AuthLayout from '../layouts/authLayout'
 import { FormProvider } from 'react-hook-form'
 
 export default function Login() {
