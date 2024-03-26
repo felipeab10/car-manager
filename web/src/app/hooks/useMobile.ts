@@ -1,21 +1,36 @@
 'use client'
+import { useEffect, useState } from 'react'
 import config from '../../../tailwind.config'
 
 export const useMobile = () => {
+  const [currentScreenWidth, setCurrentScreenWidth] = useState(0)
+
   function isMobile() {
-    return Object.keys(config.theme.screens).reduce((acc, current) => {
-      const key = current as keyof typeof config.theme.screens
-      let windowScreen = 414
+    return currentScreenWidth <= parseInt(config.theme.screens.mobile.max)
+    //   return Object.keys(config.theme.screens).reduce((acc, current) => {
+    //     const key = current as keyof typeof config.theme.screens
 
-      if (typeof window !== 'undefined') {
-        windowScreen = window?.innerWidth
-      }
+    //     const smallScreen = config.theme.screens['mobile'].max
 
-      const localScreens = config.theme.screens[key]
-      return (acc =
-        windowScreen < parseInt(localScreens.min?.replace('px', '')))
-    }, false)
+    //     return (acc = currentScreenWidth <= parseInt(smallScreen))
+    //   }, false)
   }
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentScreenWidth(window.innerWidth)
+
+      window.addEventListener('resize', () =>
+        setCurrentScreenWidth(window.innerWidth),
+      )
+    }
+
+    return () => {
+      window.removeEventListener('resize', () =>
+        setCurrentScreenWidth(window.innerWidth),
+      )
+    }
+  }, [])
 
   return { isMobile }
 }

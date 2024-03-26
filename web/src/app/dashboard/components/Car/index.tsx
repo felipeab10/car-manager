@@ -18,7 +18,10 @@ export function Car({ carro }: CarPros) {
   return (
     <Card className="bg-zinc-900 text-zinc-200 border-zinc-800 ">
       <CardHeader>
-        <Link href="#" className="font-bold text-zinc-300 self-end">
+        <Link
+          href="#"
+          className="font-bold text-zinc-300 self-end hover:text-zinc-100"
+        >
           Editar
         </Link>
         <Image

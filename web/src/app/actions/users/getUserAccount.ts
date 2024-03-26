@@ -9,5 +9,5 @@ export async function getUserAccount(email: string) {
     throw Error('USER_NOT_FOUND')
   }
 
-  return user
+  return JSON.stringify(user)
 }

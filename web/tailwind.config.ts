@@ -12,9 +12,9 @@ const config = {
   theme: {
     screens: {
       mobile: { min: '0px', max: '639px' },
-      tablet: { min: '351px', max: '640px' },
-      laptop: { min: '641px', max: '1024px' },
-      desktop: { min: '1280px' },
+      tablet: { min: '351px', max: '1024px' },
+      laptop: { min: '1025px', max: '1980px' },
+      desktop: { min: '1981px', max: '3000px' },
     },
     container: {
       center: true,

@@ -1,3 +1,4 @@
+'use client'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { getUserAccount } from '../actions/users/getUserAccount'
@@ -34,12 +35,16 @@ export interface UserType {
 
 export function useUser() {
   const [user, setUser] = useState({} as UserType)
+  const [isLoading, setIsloading] = useState(true)
 
   const { data } = useSession()
 
   async function getUser(email: string) {
-    const response = await getUserAccount(email)
-    setUser(response)
+    getUserAccount(email)
+      .then((response) => {
+        setUser(JSON.parse(response))
+      })
+      .finally(() => setIsloading(false))
   }
 
   useEffect(() => {
@@ -48,5 +53,5 @@ export function useUser() {
     }
   }, [data?.user.email])
 
-  return { user }
+  return { user, isLoading }
 }

@@ -11,19 +11,23 @@ import {
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { useUser } from '@/app/hooks/useUser'
+import { useMobile } from '@/app/hooks/useMobile'
 
 export function Profile() {
   const { user } = useUser()
+  const { isMobile } = useMobile()
 
   return (
     <div className="flex mr-2">
       <DropdownMenu>
-        <DropdownMenuTrigger asChild className="bg-zinc-800  h-[25px] w-[25px]">
+        <DropdownMenuTrigger asChild className="bg-zinc-800 ">
           <Button
             variant="link"
-            className="text-zinc-100 p-0 outline-none focus:border-none decoration-0 "
+            className={`text-zinc-100 p-0 outline-none focus:border-none decoration-0 rounded-full ${
+              isMobile() ? '' : ' w-[60px]  h-[60px]  '
+            }`}
           >
-            <Avatar>
+            <Avatar className={isMobile() ? '' : 'w-[60px] h-[60px]'}>
               <AvatarImage src={user.imagem_profile ?? ''} />
               <AvatarFallback className="bg-zinc-800 text-zinc-300">
                 <span className="text-[10px]">{user.nome}</span>

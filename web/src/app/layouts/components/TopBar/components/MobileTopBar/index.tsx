@@ -4,10 +4,11 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { IoClose, IoMenu, IoCarSportSharp, IoHome } from 'react-icons/io5'
+import { IoClose, IoMenu } from 'react-icons/io5'
 import { Profile } from '../Profile'
 import { useState } from 'react'
-import Link from 'next/link'
+import { MenuLinks } from '../MenuLinks'
+import { MiniLogo } from '../../../miniLogo'
 
 export function MobileTopBar() {
   const [menuActive, setMenuActive] = useState(false)
@@ -32,22 +33,10 @@ export function MobileTopBar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56 bg-zinc-800 text-zinc-100 border-none p-4 mt-6 ml-4">
-            <div className="flex flex-col gap-6">
-              <Link href="/dashboard" className="flex gap-4 items-center">
-                <IoHome className="text-red-800 w-[30px] h-[30px]" />
-                <span>Home</span>
-              </Link>
-              <Link href="/meus-carros" className="flex gap-4 items-center">
-                <IoCarSportSharp className="text-red-800 w-[30px] h-[30px]" />
-                <span>Meus Carros</span>
-              </Link>
-            </div>
+            <MenuLinks />
           </DropdownMenuContent>
         </DropdownMenu>
-        <div>
-          <span className="text-red-500 font-bold text-lg">C</span>
-          <span>-Manager</span>
-        </div>
+        <MiniLogo />
       </div>
       <Profile />
     </>
